@@ -8,27 +8,63 @@ function ProductCard({ product }) {
   };
 
   return (
-    <div className="bg-[#d5f6fc] w-150 p-12 border bottom-0 border-blue-300 rounded-2xl shadow">
-      <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-      <p className="text-gray-900 mb-1.5 font-semibold">
-        Price: ₹{product.price}
-      </p>
-      <p className="text-black">{product.description}</p>
-      <p className="text-gray-500">{product.category}</p>
-
-      <div className="mt-2 flex items-center justify-center">
+    <div className="group bg-white flex flex-col rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
+      {/* Image Container with fixed Aspect Ratio */}
+      <div className="p-6 bg-gray-50 flex items-center justify-center h-64 overflow-hidden">
         <img
-          className="w-full min-h-20 max-h-60 object-cover rounded-3xl"
+          className="h-full object-contain group-hover:scale-120 transition-transform duration-300"
           src={product.image}
-          alt={product.name}
+          alt={product.title}
         />
       </div>
-      <button
-        onClick={addToCart}
-        className="mt-3 bg-[#ffc155] hover:bg-[#e7a638] text-white px-4 py-2 rounded-3xl"
-      >
-        Add to Cart
-      </button>
+
+      {/* Content Section */}
+      <div className="p-5 flex flex-col grow">
+        <span className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">
+          {product.category}
+        </span>
+
+        <h3 className="text-gray-800 font-bold text-lg leading-tight mb-2 line-clamp-1 transition-all cursor-default">
+          {product.title}
+        </h3>
+
+        <p className="text-gray-500 text-sm line-clamp-2 mb-4 grow">
+          {product.description}
+        </p>
+
+        <div className="flex items-center justify-between mt-auto">
+          <div>
+            <span className="text-sm text-gray-400 block font-medium">
+              Price
+            </span>
+            <span className="text-2xl font-black text-gray-900">
+              ₹{product.price}
+            </span>
+          </div>
+
+          <button
+            onClick={addToCart}
+            className="bg-gray-900 hover:bg-blue-600 text-white p-3 rounded-xl transition-colors duration-300 shadow-lg shadow-gray-200"
+            title="Add to Cart"
+          >
+            {/* Adding a simple "+" icon visual */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
