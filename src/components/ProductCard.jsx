@@ -12,7 +12,7 @@ function ProductCard({ product }) {
       {/* Image Container with fixed Aspect Ratio */}
       <div className="p-6 bg-gray-50 flex items-center justify-center h-64 overflow-hidden">
         <img
-          className="h-full object-contain group-hover:scale-110 transition-transform duration-500"
+          className="h-full object-contain group-hover:scale-120 transition-transform duration-300"
           src={product.image}
           alt={product.title}
         />
