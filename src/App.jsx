@@ -6,6 +6,8 @@ import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Users from "./pages/User";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -28,7 +30,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <h1>Profile</h1>
+              <Profile />
             </ProtectedRoute>
           }
         />
@@ -37,6 +39,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
             </ProtectedRoute>
           }
         />

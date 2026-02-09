@@ -1,4 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
+import { authServiceForAPI, setLogoutHandler } from "../services/authService";
+import { fetchUserList } from "../services/userService";
 
 export const AuthContext = createContext();
 const getInitialAuthState = () => {
@@ -40,6 +42,32 @@ export function AuthProvider({ children }) {
     getInitialAuthState,
   ); // lazy initialization
 
+  // login function that can be used across the app
+  async function login(username, password) {
+    const response = await authServiceForAPI(username, password);
+    if (response && response.token) {
+      const users = await fetchUserList();
+      const loginUser = users.find((user) => user.username === username);
+
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          token: response.token,
+          user: loginUser,
+        },
+      });
+      return true;
+    }
+    return false;
+  }
+
+  // register logout handler ONCE
+  useEffect(() => {
+    setLogoutHandler(() => {
+      dispatch({ type: "LOGOUT" });
+    });
+  }, []);
+
   useEffect(() => {
     if (state.token) {
       localStorage.setItem("token", state.token);
@@ -50,7 +78,7 @@ export function AuthProvider({ children }) {
     }
   }, [state.token, state.user]);
 
-  /* for putting logout on other tabs when token is removed manually
+  /* for dispatching logout on other tabs when token is removed manually
    from localStorage manually or other way */
   useEffect(() => {
     const handleStorageChange = () => {
@@ -69,7 +97,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch, login }}>
       {children}
     </AuthContext.Provider>
   );
