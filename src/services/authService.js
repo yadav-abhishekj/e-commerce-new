@@ -12,12 +12,8 @@ export const triggerLogout = () => {
   }
 };
 
-export async function authServiceForAPI(username, password) {
-  try {
-    const credentials = { username, password };
-    const response = await axiosInstance.post("/auth/login", credentials);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export async function authServiceForAPI(email, password) {
+  const credentials = { email, password };
+  const response = await axiosInstance.post("/login", credentials);
+  return response;
 }

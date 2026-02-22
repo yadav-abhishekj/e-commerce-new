@@ -1,8 +1,10 @@
+import { useModal } from "../context/ModalContext";
 import useCartContext from "../hooks/useCartHook";
 import { Link } from "react-router-dom";
 
 function Cart() {
   const { state, dispatch } = useCartContext();
+  const { openModal } = useModal();
 
   if (state.items.length === 0) {
     return (
@@ -54,18 +56,18 @@ function Cart() {
           <div className="lg:col-span-2 space-y-4">
             {state.items.map((item) => (
               <div
-                key={item.id}
-                className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex gap-4 items-center"
+                key={item._id}
+                className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex gap-4 items-center hover:border hover:bg-blue-100 hover:border-blue-600 hover:shadow-md transition-colors "
               >
-                <div className="w-24 h-24 bg-gray-50 rounded-xl flex-shrink-0 p-2">
+                <div className="w-34 h-34 bg-gray-50 rounded-xl shrink p-2 ">
                   <img
-                    className="w-full h-full object-contain"
-                    src={item.image}
+                    className="w-full h-full object-contain "
+                    src={item.images[0].url}
                     alt={item.name}
                   />
                 </div>
 
-                <div className="flex-grow">
+                <div className="grow">
                   <h4 className="font-bold text-gray-800 line-clamp-1">
                     {item.name}
                   </h4>
@@ -74,38 +76,55 @@ function Cart() {
                 </div>
 
                 <div className="flex flex-col items-end gap-3">
-                  <div className="flex items-center bg-gray-100 rounded-lg p-1">
+                  <div className="flex items-center bg-white rounded-lg p-1">
+                    <button
+                      onClick={() =>
+                        dispatch({
+                          type: "REMOVE_FROM_CART",
+                          payload: item._id,
+                        })
+                      }
+                      className="text-gray-500 hover:text-white hover:bg-red-600 transition rounded-md p-2 flex items-center justify-center mr-1.5"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5 "
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+
                     <button
                       onClick={() =>
                         dispatch({
                           type: "DECREASE_QUANTITY",
-                          payload: item.id,
+                          payload: item._id,
                         })
                       }
-                      className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-md transition"
+                      className="w-10 h-10 flex items-center justify-center p-2  hover:bg-blue-600 hover:text-white rounded-md transition"
                     >
                       −
                     </button>
-                    <span className="px-4 font-bold text-sm">
+                    <span className="px-5 font-bold text-lg">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() =>
                         dispatch({ type: "ADD_ITEM", payload: item })
                       }
-                      className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-md transition"
+                      className="w-10 h-10 flex items-center justify-center p-2 hover:bg-blue-600 hover:text-white rounded-md transition"
                     >
                       +
                     </button>
                   </div>
-                  <button
-                    onClick={() =>
-                      dispatch({ type: "REMOVE_FROM_CART", payload: item.id })
-                    }
-                    className="text-xs text-red-500 font-semibold hover:underline"
-                  >
-                    Remove
-                  </button>
                 </div>
               </div>
             ))}
@@ -134,7 +153,17 @@ function Cart() {
                 </span>
               </div>
             </div>
-            <button className="w-full mt-8 bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-gray-200">
+            <button
+              onClick={() =>
+                openModal({
+                  title: "Checkout Coming Soon 🚀",
+                  message:
+                    "Razorpay integration and backend order APIs are currently under development.",
+                  primaryText: "Got it",
+                })
+              }
+              className="w-full mt-8 bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-gray-200 scale-100 hover:scale-105"
+            >
               Proceed to Checkout
             </button>
           </div>
