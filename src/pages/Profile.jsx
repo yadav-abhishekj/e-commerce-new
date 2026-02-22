@@ -1,4 +1,3 @@
-import { useState } from "react";
 import UserMap from "../components/UserMap";
 import useAuthContext from "../hooks/useAuth";
 
@@ -16,18 +15,18 @@ function Profile() {
       <div className="p-5 flex items-center justify-between bg-linear-to-t from-white to-gray-200 border-b border-gray-300">
         <div className="p-5 flex items-center gap-4">
           <img
-            src={authState.user.image}
-            alt={authState.user.name}
+            src={authState.user?.image}
+            alt={authState.user?.name}
             className="w-16 h-16 rounded-full border-2 border-white shadow-sm"
           />
           <div className="overflow-hidden">
             <div className="flex text-lg font-bold text-gray-800 truncate leading-tight gap-1">
               <p className="first-letter:capitalize">
-                {authState.user.name}
+                {authState.user?.name}
               </p>{" "}
             </div>
             <p className="text-sm text-gray-600 truncate">
-              {authState.user.email}
+              {authState.user?.email}
             </p>
           </div>
         </div>
@@ -37,20 +36,20 @@ function Profile() {
         <div className="flex gap-3">
           <span className="text-gray-400">📍</span>
           <p className="text-gray-600 italic leading-snug">
-            {authState.user.address.street}, {authState.user.address.number}
+            {authState.user?.address?.street}, {authState.user?.address?.number}
             <br />
-            {authState.user.address.city}, {authState.user.address.zipcode}
+            {authState.user?.address?.city}, {authState.user?.address?.zipcode}
           </p>
         </div>
         <div className="flex gap-3 items-center">
           <span className="text-gray-400">📞</span>
-          <p className="text-gray-600 font-medium">{authState.user.phone}</p>
+          <p className="text-gray-600 font-medium">{authState.user?.phone}</p>
         </div>
       </div>
       <UserMap
-        lat={+authState.user.address.geolocation.lat}
-        long={+authState.user.address.geolocation.long}
-        userName={authState.user.name}
+        lat={+authState.user?.address?.geolocation?.lat}
+        long={+authState.user?.address?.geolocation?.long}
+        userName={authState.user?.name}
       />
     </div>
   );
