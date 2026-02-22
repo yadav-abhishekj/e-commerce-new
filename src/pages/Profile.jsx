@@ -46,11 +46,17 @@ function Profile() {
           <p className="text-gray-600 font-medium">{authState.user?.phone}</p>
         </div>
       </div>
-      <UserMap
-        lat={+authState.user?.address?.geolocation?.lat}
-        long={+authState.user?.address?.geolocation?.long}
-        userName={authState.user?.name}
-      />
+      {authState.user?.address && authState.user?.address?.geolocation ? (
+        <UserMap
+          lat={+authState.user?.address?.geolocation?.lat || 0}
+          long={+authState.user?.address?.geolocation?.long || 0}
+          userName={authState.user?.name}
+        />
+      ) : (
+        <p className="text-gray-500 italic text-center py-10">
+          No location data available to display on the map.
+        </p>
+      )}
     </div>
   );
 }
