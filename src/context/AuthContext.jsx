@@ -1,6 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
 import { authServiceForAPI, setLogoutHandler } from "../services/authService";
-import { fetchUserList } from "../services/userService";
 
 export const AuthContext = createContext();
 const getInitialAuthState = () => {
@@ -43,17 +42,22 @@ export function AuthProvider({ children }) {
   ); // lazy initialization
 
   // login function that can be used across the app
-  async function login(username, password) {
-    const response = await authServiceForAPI(username, password);
-    if (response && response.token) {
-      const users = await fetchUserList();
-      const loginUser = users.find((user) => user.username === username);
+  async function login(email, password) {
+    const response = await authServiceForAPI(email, password);
+    const api_data = response.data.data;
 
+    if (response && response.status === 200 && response.data.success) {
       dispatch({
         type: "LOGIN",
         payload: {
-          token: response.token,
-          user: loginUser,
+          token: api_data.token,
+          user: {
+            id: api_data.user.id,
+            name: api_data.user.name,
+            email: api_data.user.email,
+            image: api_data.user.avatar.url,
+            address: api_data.user.address,
+          },
         },
       });
       return true;

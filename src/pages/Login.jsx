@@ -1,18 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../hooks/useAuth";
+import { useModal } from "../context/ModalContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuthContext();
+  const { openModal } = useModal();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const loginSuccess = await login(
-      event.target.username.value,
-      event.target.password.value,
-    );
-    if (loginSuccess) {
-      navigate("/products");
+    try {
+      const loginSuccess = await login(
+        event.target.email.value,
+        event.target.password.value,
+      );
+      if (loginSuccess) {
+        navigate("/products");
+      }
+    } catch (error) {
+      console.log({
+        error,
+        message: error?.response?.data?.message,
+        error_status: error.status,
+      });
+      openModal({
+        title: "Login Failed",
+        message:
+          error?.response?.data?.message ||
+          "Invalid credentials. Please try again.",
+        primaryText: "OK",
+      });
     }
   };
 
@@ -21,14 +38,14 @@ export default function Login() {
       <form className="p-6" onSubmit={handleLogin}>
         <h2 className="text-xl font-semibold mb-4">Login</h2>
         <label className="block mb-2">
-          Username:
+          email:
           <input
-            type="text"
+            type="email"
             className="ml-2 p-1 border rounded"
-            placeholder="Enter username"
-            name="username"
+            placeholder="Enter email"
+            name="email"
             required
-            defaultValue="johnd"
+            defaultValue="johnd@yopmail.com"
           />
         </label>
         <label className="block mb-4">
@@ -39,7 +56,7 @@ export default function Login() {
             placeholder="Enter password"
             name="password"
             required
-            defaultValue="m38rmF$"
+            defaultValue="Asd123!@#"
           />
         </label>
         <button
@@ -56,8 +73,8 @@ export default function Login() {
           Use the following credentials to log in:
         </p>
         <ul className="list-disc list-inside text-gray-700 mt-2">
-          <li>Username: johnd</li>
-          <li>Password: m38rmF$</li>
+          <li>Username: johnd@yopmail.com</li>
+          <li>Password: Asd123!@#</li>
         </ul>
       </div>
     </>
