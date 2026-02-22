@@ -67,7 +67,7 @@ function Home() {
           </div>
 
           <div className="hidden lg:block relative">
-            <div className="relative z-10 bg-gradient-to-tr from-gray-800 to-gray-700 p-8 rounded-[2.5rem] shadow-2xl border border-white/10 scale-110">
+            <div className="relative z-10 bg-linear-to-tr from-gray-800 to-gray-700 p-8 rounded-[2.5rem] shadow-2xl border border-white/10 scale-110">
               <img
                 src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600"
                 alt="Featured Product"

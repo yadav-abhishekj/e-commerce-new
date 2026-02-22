@@ -22,8 +22,8 @@ export default function UserMap({ lat, long, userName }) {
       <MapContainer
         center={position}
         zoom={3}
-        scrollWheelZoom={false}
-        className="h-full w-full"
+        scrollWheelZoom={true}
+        className="h-full w-full filter grayscale"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -35,7 +35,7 @@ export default function UserMap({ lat, long, userName }) {
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${lat},${long}`}
               target="_blank"
-              className="text-blue-600 underline"
+              className="hover:underline"
             >
               View on Google Maps
             </a>

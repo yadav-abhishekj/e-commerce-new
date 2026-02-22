@@ -2,7 +2,7 @@ import axios from "axios";
 import { triggerLogout } from "./authService";
 
 const axiosInstance = axios.create({
-  baseURL: "https://fakestoreapi.com", // Replace with your API base URL
+  baseURL: "https://e-commerce-new-backend.vercel.app/api/v1",
   headers: {
     "Content-Type": "application/json",
   },

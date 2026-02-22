@@ -42,8 +42,11 @@ function Navbar() {
           <NavLink to="/products" className={navClass}>
             Products
           </NavLink>
-          <NavLink to="/users" className={navClass}>
-            Directory
+          <NavLink to="/about" className={navClass}>
+            About Us
+          </NavLink>
+          <NavLink to="/contact" className={navClass}>
+            Contact
           </NavLink>
         </div>
 
@@ -75,21 +78,37 @@ function Navbar() {
           </NavLink>
 
           {authState.isAuthenticated ? (
-            <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
+            <div className="flex items-center gap-4 pl-4 border-l border-gray-600">
               <NavLink
                 to="/profile"
-                className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden"
+                className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-600"
               >
                 <img
-                  src={`https://ui-avatars.com/api/?name=${authState.user?.name.firstname}+${authState.user?.name.lastname}&background=random`}
-                  alt="profile"
+                  src={
+                    authState.user.image
+                      ? authState.user.image
+                      : `https://ui-avatars.com/api/?name=${authState.user?.name}&background=random`
+                  }
+                  alt={authState.user?.name}
                 />
               </NavLink>
               <button
                 onClick={handleLogout}
-                className="text-sm font-bold text-red-500 hover:text-red-700 transition"
+                className="text-sm font-bold text-red-500 hover:text-red-700 transition cursor-pointer rounded-full border-2 border-red-600"
               >
-                Logout
+                <svg
+                  className="w-6 h-6 inline-block ml-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+                  />
+                </svg>
               </button>
             </div>
           ) : (
